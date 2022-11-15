@@ -21,7 +21,7 @@ table_cell = soup.findAll('td', attrs={'role':'gridcell'})
 index = 0
 for x in range(5):
     currency = str(table_cell[index+2].text)
-    if str(table_cell[index+1].text) == '3' or str(table_cell[index+1].text) == '5':
+    if currency == 'TetherUSDT' or currency == 'USD CoinUSDC':
         name = currency[:-4]
         symbol = currency[len(currency)-4:]
     else:
@@ -32,7 +32,8 @@ for x in range(5):
     num = price[1].replace(',','')
     #gets the dollar amount that the crypto has changed that day
     percent = table_cell[index+4].text
-    pChange = round(float(num) * float(percent[1:len(percent)-1]),2)
+    percent = float(percent[1:len(percent)-1])
+    pChange = round(float(num) * percent*.01,2)
 
     print(f'Name: {name}')
     print(f'Symbol: {symbol}')
